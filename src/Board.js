@@ -281,7 +281,6 @@
       var tester = false;
       //loop
       var iNumber = (this.get('n') * 2) - 2;
-      console.log(iNumber);
       for (var i = iNumber; i > 0; i--) {
         
         //the hasMajorDiagonalConflictAt function will loop through the matrix starting at the inputted index i.
