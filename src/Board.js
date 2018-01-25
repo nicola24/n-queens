@@ -80,7 +80,7 @@
     // test if a specific row on this board contains a conflict
     hasRowConflictAt: function(rowIndex) {
       var conflict = 0;
-      this.get(rowIndex).forEach(function(i) {
+      this.rows()[rowIndex].forEach(function(i) {
         if (i === 1) {
           conflict ++;
         }
@@ -95,13 +95,13 @@
     // test if any rows on this board contain conflicts
     hasAnyRowConflicts: function() {
       var test = false;
-      for (var i = 0; i < this.get('n'); i++){
+      for (var i = 0; i < this.get('n'); i++) {
         if (this.hasRowConflictAt(i)) {
           test = true;
         } 
       }
       return test;
-       // fixme
+      
     },
 
 
@@ -117,7 +117,7 @@
         if (this.get(rowIndex)[colIndex] === 1) {
           conflict++;
         }
-       // fixme
+
       }
       if (conflict > 1) {
         return true;
@@ -128,12 +128,13 @@
     hasAnyColConflicts: function() {
       var test = false;
       for (var i = 0; i < this.get('n'); i++) {
-        if(this.hasColConflictAt(i)){
+        if (this.hasColConflictAt(i)) {
           test = true;
         }
       }
       return test; // fixme
     },
+  
 
 
 
@@ -142,12 +143,79 @@
     //
     // test if a specific major diagonal on this board contains a conflict
     hasMajorDiagonalConflictAt: function(majorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      // conflict variable to measure amount of "1" present in the matrix.
+
+      var conflicts = 0;
+
+      // set columnIndex to the parameter for easier use.
+
+      var columnIndex = majorDiagonalColumnIndexAtFirstRow;
+
+      //loop for the length of 'n'
+
+      for (var i = 0; i < this.get('n'); i++) {
+
+      //if the column number is within the scope of 'n' execute the function.
+    
+        if (columnIndex < this.get('n')) {
+
+          //columnAtRow will represent the value at row of i at the column index.
+
+          var columnAtRow = this.rows()[i][columnIndex];
+
+         
+
+          //if that value = 1, the conflicts variable is increased.
+       
+          if ( columnAtRow === 1) {
+
+            conflicts++;
+          }
+        
+          //then increment the column index so we can loop again and search the next row at the diagonal index.
+
+          columnIndex++;
+
+        }
+
+      }
+
+      // after the function if the conflicts are greater than 1, we know theres two diagonal "1" instances
+
+      if (conflicts > 1) {
+
+        return true;
+
+      } else {
+
+        return false;
+
+      }
+
     },
 
     // test if any major diagonals on this board contain conflicts
     hasAnyMajorDiagonalConflicts: function() {
-      return false; // fixme
+      
+        
+      //set the test = false because we have not achieved a conflicts number bigger than one 
+      var test = false;
+      //loop
+      var iValue = this.get('n');
+      for (var i = -iValue; i < iValue; i++) {
+        
+        //the hasMajorDiagonalConflictAt function will loop through the matrix starting at the inputted index i.
+        if (this.hasMajorDiagonalConflictAt(i)) {
+          // if it evaluates to a conflict set test to true.
+          test = true;
+        }
+                
+      }
+      
+      
+      
+      // return the result.
+      return test; 
     },
 
 
@@ -157,12 +225,77 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var conflictsReturn = 0;
+      var extraLength = (this.get('n') * 2) - 2;
+      // set columnIndex to the parameter for easier use.
+
+      var columnIndex1 = minorDiagonalColumnIndexAtFirstRow;
+
+      //loop for the length of 'n'
+      
+      for (var i = 0; i < this.get('n'); i++) {
+
+      //if the column number is within the scope of 'n' execute the function.
+    
+        if (columnIndex1 < extraLength) {
+
+          //columnAtRow will represent the value at row of i at the column index.
+
+          var columnAtRow1 = this.rows()[i][columnIndex1];
+
+        
+
+          //if that value = 1, the conflictsReturn variable is increased.
+       
+          if ( columnAtRow1 === 1) {
+
+            conflictsReturn++;
+          }
+        
+          //then increment the column index so we can loop again and search the next row at the diagonal index.
+
+          columnIndex1--;
+
+        }
+
+      }
+
+      // after the function if the conflictsReturn are greater than 1, we know theres two diagonal "1" instances
+
+      if (conflictsReturn > 1) {
+
+        return true;
+
+      } else {
+
+        return false;
+
+      }
+
+    
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      //set the test = false because we have not achieved a conflicts number bigger than one 
+      var tester = false;
+      //loop
+      var iNumber = (this.get('n') * 2) - 2;
+      console.log(iNumber);
+      for (var i = iNumber; i > 0; i--) {
+        
+        //the hasMajorDiagonalConflictAt function will loop through the matrix starting at the inputted index i.
+        if (this.hasMinorDiagonalConflictAt(i)) {
+          // if it evaluates to a conflict set test to true.
+          tester = true;
+        }
+                
+      }
+      
+      
+      
+      // return the result.
+      return tester; 
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
