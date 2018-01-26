@@ -14,24 +14,75 @@
 // return a matrix (an array of arrays) representing a single nxn chessboard, 
 // with n rooks placed such that none of them can attack each other
 
-
+window.findSolution = function(rowStart, col, n, board) {
+  //board is assigned to board object passed in
+  var board = board;
+  var solution = [];
+  if (n === 1) {
+    solution.push([1]);
+    console.log(solution);
+    return solution;
+  }
+  var nValue = n;
+  var rows = board.attributes.rows();
+  // console.log(rows + " the rows");
+  // board.togglePiece(rowStart, col);
+  // var counter = 0;
+  // debugger;
+  // var recurse = function(arr) {
+  //   console.log(arr[counter] + " " + counter);
+  //   for (var i = 0; i < nValue - 1; i++) {
+  //     if (arr[i] !== 1) {
+  //       board.togglePiece(counter, i);
+  //       if (board.hasAnyRooksConflicts()) {
+  //         board.togglePiece(counter, i);
+  //       }
+  //     }
+  //   }
+  //   if (counter < nValue) {
+  //     console.log("yes");
+  //     counter ++; 
+  //     recurse(rows[counter]);
+  //   } else {
+  //     solution.push(board.rows());
+  //     return solution;
+  //   }
+    
+  // };
+  // recurse(rows[counter]);
+};
 
 window.findNRooksSolution = function(n) {
-  var solution = [];
-  var numbers = [0,1]; 
-  var board = new Board({ n: n });
-  for (i = 0; i < n; i ++) {
-    board.i = 
-  }
-  
-
-  console.log('Single solution for ' + n + ' rooks:', JSON.stringify(solution));
-  return solution;
+  var board = new Board({ 'n': n });
+  console.log(board);
+  console.log(board.rows());
+  var nValue = n;
+  this.findSolution(0, 0, nValue, board);
 };
 
 // return the number of nxn chessboards that exist, with n rooks placed such that none of them can attack each other
 window.countNRooksSolutions = function(n) {
-  var solutionCount = undefined; //fixme
+  var board = new Board({ n: n });
+  var solutionCount = 0;
+  var nValue = n;
+  var searchAll = function(col) {
+    if (col < n) {
+      for (var i = 0; i < n; i++) {
+        if (this.findSolution(i, col, nValue, board)) {
+          solutionCount++;
+        }
+      }
+      
+    }
+    var nextCol = col++;
+    searchAll(nextCol);
+    
+    
+  };
+  
+  searchAll(0);
+  
+
 
   console.log('Number of solutions for ' + n + ' rooks:', solutionCount);
   return solutionCount;
